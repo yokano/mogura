@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:index.html">
+   </FileRef>
+   <FileRef
+      location = "group:ranking_scene.js">
+   </FileRef>
+   <FileRef
+      location = "group:game.js">
+   </FileRef>
+   <FileRef
+      location = "group:game_scene.js">
+   </FileRef>
+   <FileRef
+      location = "group:title_scene.js">
+   </FileRef>
+   <FileRef
+      location = "group:mogura.css">
+   </FileRef>
+   <FileRef
+      location = "group:enchant.min.js">
+   </FileRef>
+</Workspace>
