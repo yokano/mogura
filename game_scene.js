@@ -39,10 +39,31 @@ var GameScene = Class.create(Scene, {
 		this.addChild(this._timer);
 		this._timer.start();
 		
-		var mole = new Mole(0, 0);
+		var lair = this._getEmptyLair();
+		var mole = new Mole(lair.pos_x, lair.pos_y);
 		this.addChild(mole);
 		
 		this.addChild(this.counter);
+	},
+	
+	/**
+	 * 空いている巣穴をランダムに取得する
+	 * @method
+	 * @memberof GameScene
+	 * @returns {Lair} 空いている巣穴
+	 */
+	_getEmptyLair: function() {
+		var emptyLairs = [];
+		for(var x = 0; x < 3; x++) {
+			for(var y = 0; y < 3; y++) {
+				if(game.currentScene.lairs[x][y].full == false) {
+					emptyLairs.push(game.currentScene.lairs[x][y]);
+				}
+			}
+		}
+
+		var r = Math.floor(Math.random() * emptyLairs.length);
+		return emptyLairs[r];
 	}
 });
 
@@ -140,6 +161,9 @@ var Timer = Class.create(Group, {
  * @extends Sprite
  */
 var Mole = Class.create(Sprite, {
+	_lair_x: 0,
+	_lair_y: 0,
+	
 	/**
 	 * コンストラクタ
 	 * @method
@@ -149,11 +173,22 @@ var Mole = Class.create(Sprite, {
 	 */
 	initialize: function(x, y) {
 		Sprite.call(this);
+		
+		if(game.currentScene.lairs[x][y].full) {
+			console.log('the lair is full!');
+			return;
+		}
+		
+		this._lair_x = x;
+		this._lair_y = y;
+		
 		this.image = game.assets['img/mole.png'];
 		this.width = this.image.width;
 		this.height = this.image.height;
 		this.x = game.currentScene.lairs[x][y].x;
 		this.y = game.currentScene.lairs[x][y].y - this.height + 20;
+		
+		game.currentScene.lairs[x][y].full = true;
 	},
 	
 	/**
@@ -164,6 +199,7 @@ var Mole = Class.create(Sprite, {
 	ontouchstart: function() {
 		game.currentScene.removeChild(this);
 		game.currentScene.counter.increment();
+		game.currentScene.lairs[this._lair_x][this._lair_y].full = false;
 	}
 });
 
@@ -171,9 +207,14 @@ var Mole = Class.create(Sprite, {
  * もぐらの巣
  * @class
  * @extends Sprite
+ * @property {bool} full もぐらで塞がっていたらtrue
+ * @property {Number} pos_x X座標(0~2)
+ * @property {Number} pos_y Y座標(0~2)
  */
 var Lair = Class.create(Sprite, {
-	
+	full: false,
+	pos_x: 0,
+	pos_y: 0,
 	
 	/**
 	 * コンストラクタ
@@ -184,6 +225,9 @@ var Lair = Class.create(Sprite, {
 	 */
 	initialize: function(x, y) {
 		Sprite.call(this);
+		
+		this.pos_x = x;
+		this.pos_y = y;
 		this.image = game.assets['img/lair.png'];
 		this.width = this.image.width;
 		this.height = this.image.height;
