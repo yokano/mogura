@@ -6,6 +6,7 @@
 var GameScene = Class.create(Scene, {
 	_timer: null,
 	lairs: null,
+	counter: null,
 	
 	/**
 	 * コンストラクタ
@@ -25,6 +26,8 @@ var GameScene = Class.create(Scene, {
 				this.lairs[x][y] = lair;
 			}
 		}
+		
+		this.counter = new(Counter)
 	},
 	
 	/**
@@ -38,6 +41,8 @@ var GameScene = Class.create(Scene, {
 		
 		var mole = new Mole(0, 0);
 		this.addChild(mole);
+		
+		this.addChild(this.counter);
 	}
 });
 
@@ -73,7 +78,7 @@ var Timer = Class.create(Group, {
 		this._label = label;
 		this.addChild(label);
 		
-		this.x = 20;
+		this.x = 10;
 		this.y = 170;
 		this.width = background.width;
 		this.height = background.height;
@@ -158,6 +163,7 @@ var Mole = Class.create(Sprite, {
 	 */
 	ontouchstart: function() {
 		game.currentScene.removeChild(this);
+		game.currentScene.counter.increment();
 	}
 });
 
@@ -183,5 +189,64 @@ var Lair = Class.create(Sprite, {
 		this.height = this.image.height;
 		this.x = 20 + x * 100;
 		this.y = 290 + y * 60;
+	}
+});
+
+/**
+ * 叩いたもぐらのカウンタ
+ * @class
+ * @extends Group
+ */
+var Counter = Class.create(Group, {
+	_count: 0,
+	_label: null,
+	
+	/**
+	 * コンストラクタ
+	 * @method
+	 * @memberof Group
+	 */
+	initialize: function() {
+		Group.call(this);
+		
+		var background = new Sprite();
+		background.image = game.assets['img/counter.png'];
+		background.width = background.image.width;
+		background.height = background.image.height;
+		this.addChild(background);
+		
+		var label = new Label();
+		label.font = '50px sans-serif';
+		label.text = 0;
+		label.x = 100;
+		this.addChild(label);
+		this._label = label;
+		
+		this.width = background.width;
+		this.height = background.height;
+		this.x = 170;
+		this.y = 170;
+		
+		this._count = 0;
+	},
+	
+	/**
+	 * カウントを増やす
+	 * @method
+	 * @memberof Counter
+	 */
+	increment: function() {
+		this._count++;
+		this._label.text = this._count;
+	},
+	
+	/**
+	 * カウントをリセットする
+	 * @method
+	 * @memberof Counter
+	 */
+	reset: function() {
+		this._count = 0;
+		this._label.text = 0;
 	}
 });

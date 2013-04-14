@@ -65,7 +65,8 @@ var Game = Class.create(Core, {
 			'img/timer.png',
 			'img/down_arrow.png',
 			'img/title.png',
-			'img/lair.png'
+			'img/lair.png',
+			'img/counter.png'
 		];
 		for(var i = 0; i < files.length; i++) {
 			this.preload(files[i]);
