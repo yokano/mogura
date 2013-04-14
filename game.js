@@ -25,6 +25,7 @@ var Game = Class.create(Core, {
 	 */
 	initialize: function() {
 		Core.call(this, 320, 450);
+		this.fps = config.fps;
 		this._preload();
 	},
 	
@@ -63,7 +64,8 @@ var Game = Class.create(Core, {
 			'img/ranking_button.png',
 			'img/timer.png',
 			'img/down_arrow.png',
-			'img/title.png'
+			'img/title.png',
+			'img/lair.png'
 		];
 		for(var i = 0; i < files.length; i++) {
 			this.preload(files[i]);
@@ -81,5 +83,22 @@ var Game = Class.create(Core, {
 		background.width = background.image.width;
 		background.height = background.image.height;
 		this.rootScene.addChild(background);
+	}
+});
+
+/**
+ * もぐらの巣
+ * @class
+ * @extends Sprite
+ */
+var Lair = Class.create(Sprite, {
+	/**
+	 * コンストラクタ
+	 * @method
+	 * @memberof Lair
+	 */
+	initialize: function(x, y) {
+		Sprite.call(this, x, y);
+		this.image = game.assets['img/lair.png'];
 	}
 });
