@@ -7,6 +7,8 @@
 var TitleScene = Class.create(Scene, {
 	_startButton: null,
 	_rankingButton: null,
+	_message: null,
+	_title: null,
 	
 	/**
 	 * コンストラクタ
@@ -33,6 +35,22 @@ var TitleScene = Class.create(Scene, {
 		ranking.y = 240 + 30;
 		ranking.ontouchstart = this.ranking;
 		this._rankingButton = ranking;
+		
+		var message = new Sprite();
+		message.image = game.assets['img/down_arrow.png'];
+		message.width = message.image.width;
+		message.height = message.image.height;
+		message.x = 30;
+		message.y = 380;
+		this._message = message;
+		
+		var title = new Sprite();
+		title.image = game.assets['img/title.png'];
+		title.width = title.image.width;
+		title.height = title.image.height;
+		title.x = 10;
+		title.y = 130;
+		this._title = title;
 	},
 	
 	/**
@@ -43,6 +61,8 @@ var TitleScene = Class.create(Scene, {
 	onenter: function() {
 		this.addChild(this._startButton);
 		this.addChild(this._rankingButton);
+		this.addChild(this._message);
+		this.addChild(this._title);
 	},
 	
 	/**

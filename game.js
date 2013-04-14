@@ -60,7 +60,10 @@ var Game = Class.create(Core, {
 			'img/background.png',
 			'img/mole.png',
 			'img/start_button.png',
-			'img/ranking_button.png'
+			'img/ranking_button.png',
+			'img/timer.png',
+			'img/down_arrow.png',
+			'img/title.png'
 		];
 		for(var i = 0; i < files.length; i++) {
 			this.preload(files[i]);
