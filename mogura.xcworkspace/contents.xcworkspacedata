@@ -14,6 +14,9 @@
       location = "group:game_scene.js">
    </FileRef>
    <FileRef
+      location = "group:config.js">
+   </FileRef>
+   <FileRef
       location = "group:title_scene.js">
    </FileRef>
    <FileRef

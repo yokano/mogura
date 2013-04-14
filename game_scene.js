@@ -4,6 +4,8 @@
  * @extends Scene
  */
 var GameScene = Class.create(Scene, {
+	_timer: null,
+	
 	/**
 	 * コンストラクタ
 	 * @memberof GameScene
@@ -11,6 +13,7 @@ var GameScene = Class.create(Scene, {
 	 */
 	initialize: function() {
 		Scene.call(this);
+		this._timer = new(Timer);
 	},
 	
 	/**
@@ -19,6 +22,8 @@ var GameScene = Class.create(Scene, {
 	 * @memberof GameScene
 	 */
 	onenter: function() {
+		this.addChild(this._timer);
+		this._timer.start();
 	}
 });
 
@@ -28,19 +33,38 @@ var GameScene = Class.create(Scene, {
  * @extends Group
  */
 var Timer = Class.create(Group, {
+	_time: 0,
+	_base: 0,
+	_active: false,
+	_label: null,
+	
 	/**
 	 * コンストラクタ
 	 * @method
 	 * @memberof Timer
 	 */
 	initialize: function() {
+		Group.call(this);
+		
 		var background = new Sprite();
 		background.image = game.assets['img/timer.png'];
 		background.width = background.image.width;
 		background.height = background.image.height;
-		background.x = 20;
-		background.y = 100;
 		this.addChild(background);
+		
+		var label = new Label();
+		label.font = '50px sans-serif';
+		label.text = config.time;
+		label.x = 70;
+		this._label = label;
+		this.addChild(label);
+		
+		this.x = 20;
+		this.y = 170;
+		this.width = background.width;
+		this.height = background.height;
+		
+		this._time = config.time;
 	},
 
 	/**
@@ -49,7 +73,8 @@ var Timer = Class.create(Group, {
 	 * @memberof Timer
 	 */
 	start: function() {
-		
+		this._base = game.frame;
+		this._active = true;
 	},
 	
 	/**
@@ -58,17 +83,34 @@ var Timer = Class.create(Group, {
 	 * @memberof Timer
 	 */
 	stop: function() {
+		this._active = false;
+	},
 	
-	}
-});
-
-/**
- * もぐらを表すクラス
- * @class
- * @extends Sprite
- */
-var Mole = Class.create(Sprite, {
-	initialize: function() {
-		
+	/**
+	 * フレームごとの処理
+	 * @method
+	 * @memberof Timer
+	 */
+	onenterframe: function() {
+		var interval = game.frame - this._base;
+		if(interval >= config.fps) {
+			this._time--;
+			this._label.text = this._time;
+			if(this._time < 0) {
+				this._over();
+			}
+			this._base = game.frame;
+		}
+	},
+	
+	/**
+	 * 時間切れの割り込み
+	 * @method
+	 * @memberof Timer
+	 */
+	_over: function() {
+		this.stop();
+		alert('ゲームオーバー\nタイトルに戻ります');
+		game.changeScene(TitleScene);
 	}
 });
