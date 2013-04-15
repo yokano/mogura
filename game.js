@@ -77,7 +77,8 @@ var Game = Class.create(Core, {
 			img('title.png'),
 			img('lair.png'),
 			img('counter.png'),
-			img('ranking_background.png')
+			img('ranking_background.png'),
+			img('star.png')
 		];
 		for(var i = 0; i < files.length; i++) {
 			this.preload(files[i]);

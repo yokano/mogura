@@ -255,6 +255,7 @@ var Mole = Class.create(Sprite, {
 	 * @memberof Mole
 	 */
 	ontouchstart: function() {
+		this._star();
 		game.currentScene.counter.increment();
 		this._remove();
 	},
@@ -267,7 +268,36 @@ var Mole = Class.create(Sprite, {
 	_remove: function() {
 		this.scene.removeChild(this);
 		game.currentScene.lairs[this._lair_x][this._lair_y].full = false;
+	},
+	
+	/**
+	 * 叩かれた時のアニメーションを再生
+	 * @method
+	 * @memberof Mole
+	 */
+	_star: function() {
+		var star = new Star(this.x, this.y);
 	}
+});
+
+var Star = Class.create(Sprite, {
+	initialize: function(x, y) {
+		Sprite.call(this);
+		this.image = game.assets[img('star.png')];
+		this.width = this.image.width / 2;
+		this.height = this.image.height;
+		this.x = x;
+		this.y = y;
+		this.frame = 0;
+		game.currentScene.addChild(this);
+	},
+	onenterframe: function() {
+		this.frame++;
+		if(this.frame >= 2) {
+			this.scene.removeChild(this);
+		}
+	}
+	
 });
 
 /**
