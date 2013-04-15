@@ -9,6 +9,8 @@ var game;
 window.onload = function() {
 	game = new Game();
 	game.start();
+	
+	scrollTo(0, 240);
 };
 
 /**
