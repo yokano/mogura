@@ -8,6 +8,12 @@
       location = "group:config.js">
    </FileRef>
    <FileRef
+      location = "group:Readme.md">
+   </FileRef>
+   <FileRef
+      location = "group:LICENSE.txt">
+   </FileRef>
+   <FileRef
       location = "group:enchant.min.js">
    </FileRef>
    <FileRef
