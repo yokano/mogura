@@ -4,7 +4,7 @@
  * @extends Scene
  */
 var GameScene = Class.create(Scene, {
-	_timer: null,
+	timer: null,
 	_popTimer: null,
 	lairs: null,
 	counter: null,
@@ -16,7 +16,7 @@ var GameScene = Class.create(Scene, {
 	 */
 	initialize: function() {
 		Scene.call(this);
-		this._timer = new(Timer);
+		this.timer = new(Timer);
 		this._popTimer = new(PopTimer);
 		
 		this.lairs = [];
@@ -38,10 +38,10 @@ var GameScene = Class.create(Scene, {
 	 * @memberof GameScene
 	 */
 	onenter: function() {
-		this.addChild(this._timer);
+		this.addChild(this.timer);
 		this.addChild(this._popTimer);
 		this.addChild(this.counter);
-		this._timer.start();
+		this.timer.start();
 		this._popTimer.start();
 	},
 	
@@ -198,6 +198,15 @@ var Timer = Class.create(Group, {
 	_over: function() {
 		this.stop();
 		this.scene.over();
+	},
+	
+	/**
+	 * 残り時間を取得
+	 * @method
+	 * @memberof Timer
+	 */
+	getTime: function() {
+		return this._time;
 	}
 });
 
@@ -427,7 +436,19 @@ var PopTimer = Class.create(Node, {
 	onenterframe: function() {
 		if(this._active) {
 			if(game.frame - this._base > config.fps / 2) {
-				this.scene.pop();
+				var time = this.scene.timer.getTime();
+				var molenum = 0;
+				if(time < 10) {
+					molenum = 3;
+				} else if(time < 20) {
+					molenum = 2;
+				} else {
+					molenum = 1;
+				}
+				
+				for(var i = 0; i < molenum; i++) {
+					this.scene.pop();
+				}
 				this._base = game.frame;
 			}
 		}
