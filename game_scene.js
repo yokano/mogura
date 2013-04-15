@@ -5,6 +5,7 @@
  */
 var GameScene = Class.create(Scene, {
 	_timer: null,
+	_popTimer: null,
 	lairs: null,
 	counter: null,
 	
@@ -16,6 +17,7 @@ var GameScene = Class.create(Scene, {
 	initialize: function() {
 		Scene.call(this);
 		this._timer = new(Timer);
+		this._popTimer = new(PopTimer);
 		
 		this.lairs = [];
 		for(var x = 0; x < 3; x++) {
@@ -37,13 +39,10 @@ var GameScene = Class.create(Scene, {
 	 */
 	onenter: function() {
 		this.addChild(this._timer);
-		this._timer.start();
-		
-		var lair = this._getEmptyLair();
-		var mole = new Mole(lair.pos_x, lair.pos_y);
-		this.addChild(mole);
-		
+		this.addChild(this._popTimer);
 		this.addChild(this.counter);
+		this._timer.start();
+		this._popTimer.start();
 	},
 	
 	/**
@@ -61,9 +60,28 @@ var GameScene = Class.create(Scene, {
 				}
 			}
 		}
-
-		var r = Math.floor(Math.random() * emptyLairs.length);
-		return emptyLairs[r];
+		
+		var result;
+		if(emptyLairs.length == 0) {
+			result = null;
+		} else {
+			var r = Math.floor(Math.random() * emptyLairs.length);
+			result = emptyLairs[r];
+		}
+		return result;
+	},
+	
+	/**
+	 * もぐらをランダムな穴に出現させる
+	 * @method
+	 * @memberof GameScene
+	 */
+	pop: function() {
+		var lair = this._getEmptyLair();
+		if(lair != null) {
+			var mole = new Mole(lair.pos_x, lair.pos_y);
+			this.addChild(mole);
+		}
 	}
 });
 
@@ -262,7 +280,7 @@ var Counter = Class.create(Group, {
 		var label = new Label();
 		label.font = '50px sans-serif';
 		label.text = 0;
-		label.x = 100;
+		label.x = 70;
 		this.addChild(label);
 		this._label = label;
 		
@@ -292,5 +310,56 @@ var Counter = Class.create(Group, {
 	reset: function() {
 		this._count = 0;
 		this._label.text = 0;
+	}
+});
+
+/**
+ * もぐらをぽっぷさせるタイマー
+ * @class
+ */
+var PopTimer = Class.create(Node, {
+	_base: 0,
+	_active: false,
+	
+	/**
+	 * コンストラクタ
+	 * @method
+	 * @memberof PopTimer
+	 */ 
+	initialize: function() {
+		Node.call(this);
+		this._base = game.frame;
+	},
+	
+	/**
+	 * フレームごとの処理
+	 * @method
+	 * @memberof PopTimer
+	 */
+	onenterframe: function() {
+		if(this._active) {
+			if(game.frame - this._base > config.fps / 2) {
+				this.scene.pop();
+				this._base = game.frame;
+			}
+		}
+	},
+	
+	/**
+	 * タイマー開始
+	 * @method
+	 * @memberof PopTimer
+	 */
+	start: function() {
+		this._active = true;
+	},
+	
+	/**
+	 * タイマー停止
+	 * @method
+	 * @memberof PopTimer
+	 */
+	stop: function() {
+		this._active = false;
 	}
 });

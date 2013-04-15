@@ -1,4 +1,4 @@
 var config = {
 	time: 30,
-	fps: 10
+	fps: 15
 };
