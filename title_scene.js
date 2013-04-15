@@ -49,7 +49,7 @@ var TitleScene = Class.create(Scene, {
 		title.width = title.image.width;
 		title.height = title.image.height;
 		title.x = 10;
-		title.y = 130;
+		title.y = 5;
 		this._title = title;
 	},
 	
