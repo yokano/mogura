@@ -5,7 +5,7 @@
  */
 var GameScene = Class.create(Scene, {
 	timer: null,
-	_popTimer: null,
+	popTimer: null,
 	lairs: null,
 	counter: null,
 	
@@ -17,7 +17,7 @@ var GameScene = Class.create(Scene, {
 	initialize: function() {
 		Scene.call(this);
 		this.timer = new(Timer);
-		this._popTimer = new(PopTimer);
+		this.popTimer = new(PopTimer);
 		
 		this.lairs = [];
 		for(var x = 0; x < 3; x++) {
@@ -39,10 +39,10 @@ var GameScene = Class.create(Scene, {
 	 */
 	onenter: function() {
 		this.addChild(this.timer);
-		this.addChild(this._popTimer);
+		this.addChild(this.popTimer);
 		this.addChild(this.counter);
 		this.timer.start();
-		this._popTimer.start();
+		this.popTimer.start();
 	},
 	
 	/**
@@ -185,6 +185,8 @@ var Timer = Class.create(Group, {
 			this._label.text = this._time;
 			if(this._time < 0) {
 				this._over();
+			} else if(this._time == 1) {
+				this.scene.popTimer.stop();
 			}
 			this._base = game.frame;
 		}
@@ -438,7 +440,9 @@ var PopTimer = Class.create(Node, {
 			if(game.frame - this._base > config.fps / 2) {
 				var time = this.scene.timer.getTime();
 				var molenum = 0;
-				if(time < 10) {
+				if(time < 5) {
+					molenum = 4;
+				} else if(time < 10) {
 					molenum = 3;
 				} else if(time < 20) {
 					molenum = 2;

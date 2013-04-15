@@ -26,9 +26,6 @@
       location = "group:mogura.css">
    </FileRef>
    <FileRef
-      location = "group:mogura.png">
-   </FileRef>
-   <FileRef
       location = "group:ranking_scene.js">
    </FileRef>
    <FileRef

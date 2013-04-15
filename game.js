@@ -70,7 +70,7 @@ var Game = Class.create(Core, {
 	 */
 	_preload: function() {
 		var files = [
-			img('background.png'),
+			img('background.jpg'),
 			img('mole.png'),
 			img('start_button.png'),
 			img('ranking_button.png'),
@@ -94,7 +94,7 @@ var Game = Class.create(Core, {
 	 */
 	_setBackground: function() {
 		var background = new Sprite();
-		background.image = this.assets[img('background.png')];
+		background.image = this.assets[img('background.jpg')];
 		background.width = background.image.width;
 		background.height = background.image.height;
 		this.rootScene.addChild(background);
