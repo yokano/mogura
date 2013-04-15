@@ -19,7 +19,7 @@ var TitleScene = Class.create(Scene, {
 		Scene.call(this);
 		
 		var start = new Sprite();
-		start.image = game.assets['img/start_button.png'];
+		start.image = game.assets[img('start_button.jpg')];
 		start.width = start.image.width;
 		start.height = start.image.height;
 		start.x = 10;
@@ -28,7 +28,7 @@ var TitleScene = Class.create(Scene, {
 		this._startButton = start;
 		
 		var ranking = new Sprite();
-		ranking.image = game.assets['img/ranking_button.png'];
+		ranking.image = game.assets[img('ranking_button.jpg')];
 		ranking.width = ranking.image.width;
 		ranking.height = ranking.image.height;
 		ranking.x = 170;
@@ -37,7 +37,7 @@ var TitleScene = Class.create(Scene, {
 		this._rankingButton = ranking;
 		
 		var message = new Sprite();
-		message.image = game.assets['img/down_arrow.png'];
+		message.image = game.assets[img('down_arrow.jpg')];
 		message.width = message.image.width;
 		message.height = message.image.height;
 		message.x = 30;
@@ -45,7 +45,7 @@ var TitleScene = Class.create(Scene, {
 		this._message = message;
 		
 		var title = new Sprite();
-		title.image = game.assets['img/title.png'];
+		title.image = game.assets[img('title.jpg')];
 		title.width = title.image.width;
 		title.height = title.image.height;
 		title.x = 10;
