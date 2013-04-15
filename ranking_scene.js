@@ -4,7 +4,6 @@
  * @extends Scene
  */
 var RankingScene = Class.create(Scene, {
-	
 	/**
 	 * 初期化
 	 * @memberof RankingScene
@@ -20,6 +19,7 @@ var RankingScene = Class.create(Scene, {
 	 * @method
 	 */
 	onenter: function() {
-		console.log('rankingScene');
 	}
 });
+
+var RankingBoard = Class.create();

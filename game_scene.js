@@ -82,6 +82,35 @@ var GameScene = Class.create(Scene, {
 			var mole = new Mole(lair.pos_x, lair.pos_y);
 			this.addChild(mole);
 		}
+	},
+	
+	/**
+	 * ゲームオーバー時の処理
+	 * @method
+	 * @memberof GameScene
+	 */
+	over: function() {
+		if(confirm(this.counter.get() + '点です。\nランキングに登録しますか？')) {
+			do {
+				var name = prompt('名前を入力してください', '名無し');
+			} while(name == '');
+			
+			$.ajax('/putranking', {
+				data: {
+					name: name,
+					score: this.counter.get(),
+					kind: 'mogura'
+				},
+				async: false,
+				error: function() {
+					alert('通信エラーが発生したため保存を中止しました');
+				},
+				success: function() {
+					alert('ランキングに登録しました');
+				}
+			});
+		}
+		game.changeScene(TitleScene);
 	}
 });
 
@@ -168,8 +197,7 @@ var Timer = Class.create(Group, {
 	 */
 	_over: function() {
 		this.stop();
-		alert('ゲームオーバー\nタイトルに戻ります');
-		game.changeScene(TitleScene);
+		this.scene.over();
 	}
 });
 
@@ -310,6 +338,15 @@ var Counter = Class.create(Group, {
 	reset: function() {
 		this._count = 0;
 		this._label.text = 0;
+	},
+	
+	/**
+	 * カウントを取得する
+	 * @method
+	 * @memberof Counter
+	 */
+	get: function() {
+		return this._count;
 	}
 });
 
