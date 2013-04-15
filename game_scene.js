@@ -105,7 +105,7 @@ var Timer = Class.create(Group, {
 		Group.call(this);
 		
 		var background = new Sprite();
-		background.image = game.assets['img/timer.png'];
+		background.image = game.assets[img('timer.png')];
 		background.width = background.image.width;
 		background.height = background.image.height;
 		this.addChild(background);
@@ -200,7 +200,7 @@ var Mole = Class.create(Sprite, {
 		this._lair_x = x;
 		this._lair_y = y;
 		
-		this.image = game.assets['img/mole.png'];
+		this.image = game.assets[img('mole.png')];
 		this.width = this.image.width;
 		this.height = this.image.height;
 		this.x = game.currentScene.lairs[x][y].x;
@@ -246,7 +246,7 @@ var Lair = Class.create(Sprite, {
 		
 		this.pos_x = x;
 		this.pos_y = y;
-		this.image = game.assets['img/lair.png'];
+		this.image = game.assets[img('lair.png')];
 		this.width = this.image.width;
 		this.height = this.image.height;
 		this.x = 20 + x * 100;
@@ -272,7 +272,7 @@ var Counter = Class.create(Group, {
 		Group.call(this);
 		
 		var background = new Sprite();
-		background.image = game.assets['img/counter.png'];
+		background.image = game.assets[img('counter.png')];
 		background.width = background.image.width;
 		background.height = background.image.height;
 		this.addChild(background);
