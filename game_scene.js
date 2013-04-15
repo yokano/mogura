@@ -209,6 +209,8 @@ var Timer = Class.create(Group, {
 var Mole = Class.create(Sprite, {
 	_lair_x: 0,
 	_lair_y: 0,
+	_FRAME_NUM: 5,
+	_direction: 1,
 	
 	/**
 	 * コンストラクタ
@@ -229,12 +231,22 @@ var Mole = Class.create(Sprite, {
 		this._lair_y = y;
 		
 		this.image = game.assets[img('mole.png')];
-		this.width = this.image.width;
+		this.width = this.image.width / this._FRAME_NUM;
 		this.height = this.image.height;
 		this.x = game.currentScene.lairs[x][y].x;
 		this.y = game.currentScene.lairs[x][y].y - this.height + 20;
+		this.frame = 0;
 		
 		game.currentScene.lairs[x][y].full = true;
+	},
+	
+	onenterframe: function() {
+		this.frame += this._direction;
+		if(this.frame >= this._FRAME_NUM - 1) {
+			this._direction = -1;
+		} else if(this.frame <= 0) {
+			this._remove();
+		}
 	},
 	
 	/**
@@ -243,8 +255,17 @@ var Mole = Class.create(Sprite, {
 	 * @memberof Mole
 	 */
 	ontouchstart: function() {
-		game.currentScene.removeChild(this);
 		game.currentScene.counter.increment();
+		this._remove();
+	},
+	
+	/**
+	 * もぐらを削除する
+	 * @method
+	 * @memberof Mole
+	 */
+	_remove: function() {
+		this.scene.removeChild(this);
 		game.currentScene.lairs[this._lair_x][this._lair_y].full = false;
 	}
 });
