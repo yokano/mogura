@@ -2,27 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:index.html">
+      location = "group:app.yaml">
    </FileRef>
    <FileRef
-      location = "group:ranking_scene.js">
+      location = "group:mogura">
    </FileRef>
    <FileRef
-      location = "group:game.js">
-   </FileRef>
-   <FileRef
-      location = "group:game_scene.js">
-   </FileRef>
-   <FileRef
-      location = "group:config.js">
-   </FileRef>
-   <FileRef
-      location = "group:title_scene.js">
-   </FileRef>
-   <FileRef
-      location = "group:mogura.css">
-   </FileRef>
-   <FileRef
-      location = "group:enchant.min.js">
+      location = "group:server">
    </FileRef>
 </Workspace>
