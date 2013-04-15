@@ -94,10 +94,16 @@ var RankingBoard = Class.create(Group, {
 		for(var i = 0; i < json.length; i++) {
 			var label = new Label();
 			label.text = (i + 1) + '位　' + json[i].Name + '　' + json[i].Score + '点';
-			label.font = '20px sans-serif';
 			label.color = 'white';
-			label.x = 20;
-			label.y = 35 + i * 40;
+			if(i < 5) {
+				label.font = '20px sans-serif';
+				label.x = 20;
+				label.y = 35 + i * 40;
+			} else {
+				label.font = '15px sans-serif';
+				label.x = 30;
+				label.y = 100 + i * 30;
+			}
 			this.addChild(label);
 		}
 	}
