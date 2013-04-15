@@ -12,15 +12,6 @@ window.onload = function() {
 };
 
 /**
- * 画像のファイルパスを返す
- * @function
- * @param {String} filename ファイル名
- */
-var img = function(filename) {
-	return config.img + filename;
-}
-
-/**
  * ゲームクラス
  * @class
  * @extends Core
@@ -67,15 +58,15 @@ var Game = Class.create(Core, {
 	 */
 	_preload: function() {
 		var files = [
-			img('background.jpg'),
-			img('mole.jpg'),
-			img('start_button.jpg'),
-			img('ranking_button.jpg'),
-			img('timer.jpg'),
-			img('down_arrow.jpg'),
-			img('title.jpg'),
-			img('lair.jpg'),
-			img('counter.jpg')
+			'img/background.png',
+			'img/mole.png',
+			'img/start_button.png',
+			'img/ranking_button.png',
+			'img/timer.png',
+			'img/down_arrow.png',
+			'img/title.png',
+			'img/lair.png',
+			'img/counter.png'
 		];
 		for(var i = 0; i < files.length; i++) {
 			this.preload(files[i]);
@@ -89,7 +80,7 @@ var Game = Class.create(Core, {
 	 */
 	_setBackground: function() {
 		var background = new Sprite();
-		background.image = this.assets[img('background.jpg')];
+		background.image = this.assets['img/background.png'];
 		background.width = background.image.width;
 		background.height = background.image.height;
 		this.rootScene.addChild(background);
@@ -109,6 +100,6 @@ var Lair = Class.create(Sprite, {
 	 */
 	initialize: function(x, y) {
 		Sprite.call(this, x, y);
-		this.image = game.assets[img('lair.jpg')];
+		this.image = game.assets['img/lair.png'];
 	}
 });
