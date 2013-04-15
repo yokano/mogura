@@ -58,18 +58,20 @@ var RankingBoard = Class.create(Group, {
 	 * @memberof RankingBoard
 	 */
 	load: function() {
+		var self = this;
 		$.ajax('/getranking', {
 			data: {
 				kind: 'mogura',
 				limit: 10
 			},
 			async: false,
+			dataType: 'json',
 			error: function() {
 				alert('通信エラーが発生したためタイトルへ戻ります');
 				game.changeScene(TitleScene);
 			},
 			success: function(data) {
-				console.log(data);
+				self._showRanking(data);
 			}
 		});
 	},
@@ -81,5 +83,22 @@ var RankingBoard = Class.create(Group, {
 	 */
 	ontouchstart: function() {
 		game.changeScene(TitleScene);
+	},
+	
+	/**
+	 * ランキングデータを表示する
+	 * @method
+	 * @memberof RankingBoard
+	 */
+	_showRanking: function(json) {
+		for(var i = 0; i < json.length; i++) {
+			var label = new Label();
+			label.text = (i + 1) + '位　' + json[i].Name + '　' + json[i].Score + '点';
+			label.font = '20px sans-serif';
+			label.color = 'white';
+			label.x = 20;
+			label.y = 35 + i * 40;
+			this.addChild(label);
+		}
 	}
 });
